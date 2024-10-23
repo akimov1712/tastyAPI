@@ -1,4 +1,4 @@
-package com.example.plugins
+package ru.topbun.plugins
 
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*

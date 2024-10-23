@@ -1,7 +1,8 @@
-package com.example.plugins
+package ru.topbun.plugins
 
 import at.favre.lib.crypto.bcrypt.BCrypt
-import com.example.model.user.Users
+import ru.topbun.model.category.Categories
+import ru.topbun.model.user.Users
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -17,5 +18,6 @@ fun Application.configureDatabases() {
         driver = environment.config.property("database.driver").getString(),
         password = environment.config.property("database.password").getString(),
     )
-    transaction { SchemaUtils.create(Users) }
+    transaction { SchemaUtils.create(Users, Categories) }
+
 }

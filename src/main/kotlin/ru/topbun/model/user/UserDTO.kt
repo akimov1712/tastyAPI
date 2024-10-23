@@ -1,0 +1,8 @@
+package ru.topbun.model.user
+
+data class UserDTO(
+    val username: String,
+    val email: String,
+    val password: String,
+    val isAdmin: Boolean
+)

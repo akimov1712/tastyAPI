@@ -1,4 +1,4 @@
-package com.example.utills
+package ru.topbun.utills
 
 object Const {
 

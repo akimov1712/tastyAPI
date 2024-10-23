@@ -1,7 +1,7 @@
-package com.example
+package ru.topbun
 
-import com.example.plugins.*
-import com.example.utills.generateToken
+import ru.topbun.plugins.*
+import ru.topbun.utills.generateToken
 import io.ktor.server.application.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.netty.*

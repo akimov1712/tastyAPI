@@ -1,8 +1,9 @@
-package com.example.plugins
+package ru.topbun.plugins
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.example.utills.Const
+import ru.topbun.utills.Const
+import ru.topbun.utills.Error
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -29,7 +30,7 @@ fun Application.configureSecurity() {
                 } else null
             }
             challenge { defaultScheme, realm ->
-                call.respond(HttpStatusCode.Unauthorized, "Token недействителен или истек")
+                call.respond(HttpStatusCode.Unauthorized, Error.UNAUTHORIZED)
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.features.signUp
+package ru.topbun.features.signUp
 
 import io.ktor.server.application.*
 import io.ktor.server.routing.*

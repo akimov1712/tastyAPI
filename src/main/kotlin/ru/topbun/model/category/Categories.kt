@@ -1,0 +1,39 @@
+package ru.topbun.model.category
+
+import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
+
+object Categories : Table("Categories") {
+    val id = integer("id").autoIncrement()
+    val name = varchar("name", 24)
+    val image = varchar("image", 50)
+
+    override val primaryKey = PrimaryKey(id)
+
+    fun fetchCategory(name: String): CategoryDTO? =
+        transaction { selectAll().where { Categories.name eq name }.firstOrNull()?.toCategory() }
+
+    fun fetchCategory(id: Int): CategoryDTO? =
+        transaction { selectAll().where { Categories.id eq id }.firstOrNull()?.toCategory() }
+
+    fun containsCategory(name: Int): Boolean = fetchCategory(name) != null
+
+    fun insertCategory(name: String, image: String) {
+        transaction { insert {
+            it[Categories.name] = name
+            it[Categories.image] = image
+        } }
+    }
+
+    private fun ResultRow.toCategory(): CategoryDTO {
+        return CategoryDTO(
+            id = this[id],
+            name = this[name],
+            image = this[image],
+        )
+    }
+
+}

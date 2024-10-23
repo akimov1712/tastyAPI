@@ -1,21 +1,23 @@
-package com.example.model.user
+package ru.topbun.model.user
 
+import io.ktor.http.*
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import ru.topbun.utills.AppException
+import ru.topbun.utills.Error
 
-object Users: IntIdTable() {
+object Users: IntIdTable("Users") {
     val username = text("username")
     val email = text("email").uniqueIndex()
     val password = text("password")
+    val isAdmin = bool("isAdmin").default(false)
 
-    fun fetchUser(email: String): UserDTO? =
-        transaction { selectAll().where { Users.email eq email }.firstOrNull()?.toUser() }
-
-    fun containsUser(email: String): Boolean = fetchUser(email) != null
-
+    fun getUser(email: String): UserDTO? = transaction { selectAll().where { Users.email eq email }.firstOrNull()?.toUser() }
+    fun containsUser(email: String): Boolean = getUser(email) != null
+    fun getUserOrThrow(email: String): UserDTO = getUser(email) ?: throw AppException(HttpStatusCode.NotFound, Error.USER_NOT_FOUND)
     fun insertUser(username: String, email: String, password: String){
         transaction { insert {
             it[Users.username] = username
@@ -29,6 +31,7 @@ object Users: IntIdTable() {
             username = this[username],
             email = this[email],
             password = this[password],
+            isAdmin = this[isAdmin],
         )
     }
 
