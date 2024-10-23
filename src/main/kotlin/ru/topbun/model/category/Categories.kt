@@ -1,10 +1,13 @@
 package ru.topbun.model.category
 
+import io.ktor.http.*
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import ru.topbun.utills.AppException
+import ru.topbun.utills.Error
 
 object Categories : Table("Categories") {
     private val id = integer("id").autoIncrement()
@@ -29,6 +32,7 @@ object Categories : Table("Categories") {
     }
 
     fun selectAllCategories() = transaction { selectAll().map{ it.toCategory() }}
+    fun selectCategory(id: Int) = selectAllCategories().firstOrNull { it.id == id } ?: throw AppException(HttpStatusCode.NotFound, Error.CATEGORY_NOT_FOUND)
 
     private fun ResultRow.toCategory(): CategoryDTO {
         return CategoryDTO(

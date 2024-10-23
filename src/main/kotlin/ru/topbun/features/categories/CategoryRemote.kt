@@ -29,3 +29,7 @@ data class GetAllCategoryResponse(
     val categories: List<CategoryDTO>,
 )
 
+@Serializable
+data class GetCategoryResponse(
+    val category: CategoryDTO
+)

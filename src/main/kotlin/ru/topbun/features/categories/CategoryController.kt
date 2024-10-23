@@ -35,4 +35,11 @@ class CategoryController(
         }
     }
 
+    suspend fun getCategory(id: Int) {
+        call.wrapperException {
+            val category = Categories.selectCategory(id)
+            call.respond(HttpStatusCode.OK, GetCategoryResponse(category))
+        }
+    }
+
 }
