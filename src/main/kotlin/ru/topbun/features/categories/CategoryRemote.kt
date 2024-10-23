@@ -3,12 +3,11 @@ package ru.topbun.features.categories
 import io.ktor.http.*
 import kotlinx.serialization.Serializable
 import ru.topbun.model.category.CategoryDTO
-import ru.topbun.model.error.ErrorDTO
 import ru.topbun.utills.AppException
 import ru.topbun.utills.Error
 
 @Serializable
-data class CategoryReceive(
+data class AddCategoryReceive(
     val name: String,
     val image: String,
 ){
@@ -21,6 +20,12 @@ data class CategoryReceive(
 }
 
 @Serializable
-data class CategoryResponse(
+data class AddCategoryResponse(
     val category: CategoryDTO,
 )
+
+@Serializable
+data class GetAllCategoryResponse(
+    val categories: List<CategoryDTO>,
+)
+

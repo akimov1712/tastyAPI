@@ -7,9 +7,9 @@ import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object Categories : Table("Categories") {
-    val id = integer("id").autoIncrement()
-    val name = varchar("name", 24)
-    val image = varchar("image", 50)
+    private val id = integer("id").autoIncrement()
+    private val name = varchar("name", 24)
+    private val image = varchar("image", 50)
 
     override val primaryKey = PrimaryKey(id)
 
@@ -19,7 +19,7 @@ object Categories : Table("Categories") {
     fun fetchCategory(id: Int): CategoryDTO? =
         transaction { selectAll().where { Categories.id eq id }.firstOrNull()?.toCategory() }
 
-    fun containsCategory(name: Int): Boolean = fetchCategory(name) != null
+    fun containsCategory(name: String): Boolean = fetchCategory(name) != null
 
     fun insertCategory(name: String, image: String) {
         transaction { insert {
@@ -27,6 +27,8 @@ object Categories : Table("Categories") {
             it[Categories.image] = image
         } }
     }
+
+    fun selectAllCategories() = transaction { selectAll().map{ it.toCategory() }}
 
     private fun ResultRow.toCategory(): CategoryDTO {
         return CategoryDTO(

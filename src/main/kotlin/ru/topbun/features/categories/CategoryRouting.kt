@@ -13,6 +13,9 @@ fun Application.configureCategoryRouting(){
                 categoryController.addCategory()
             }
         }
-
+        get("/category") {
+            val categoryController = CategoryController(call)
+            categoryController.getCategories()
+        }
     }
 }

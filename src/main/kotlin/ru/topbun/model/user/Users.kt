@@ -10,10 +10,10 @@ import ru.topbun.utills.AppException
 import ru.topbun.utills.Error
 
 object Users: IntIdTable("Users") {
-    val username = text("username")
-    val email = text("email").uniqueIndex()
-    val password = text("password")
-    val isAdmin = bool("isAdmin").default(false)
+    private val username = text("username")
+    private val email = text("email").uniqueIndex()
+    private val password = text("password")
+    private val isAdmin = bool("isAdmin").default(false)
 
     fun getUser(email: String): UserDTO? = transaction { selectAll().where { Users.email eq email }.firstOrNull()?.toUser() }
     fun containsUser(email: String): Boolean = getUser(email) != null
@@ -28,6 +28,7 @@ object Users: IntIdTable("Users") {
 
     private fun ResultRow.toUser(): UserDTO {
         return UserDTO(
+            id = this[Users.id].value,
             username = this[username],
             email = this[email],
             password = this[password],

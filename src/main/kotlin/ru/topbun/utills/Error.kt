@@ -12,6 +12,7 @@ object Error {
     const val NOT_FOUND = "Пользователь с указанной почтой или паролем не найден"
     const val USER_NOT_FOUND = "Пользователь не найден"
     const val USER_EXISTS = "Пользователь с такой почтой уже зарегистрирован"
+    const val CATEGORY_EXISTS = "Категория с таким именем уже существует"
     const val INVALID_EMAIL = "Неверный формат электронной почты"
     const val USERNAME_LENGTH = "Длина псевдонима должна быть не менее 4 символов"
     const val PASSWORD_LENGTH = "Длина пароля должна быть не менее 6 символов"

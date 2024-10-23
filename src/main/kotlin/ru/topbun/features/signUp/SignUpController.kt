@@ -15,7 +15,7 @@ class SignUpController(
         call.wrapperException{
             val signUp = call.receive<SignUpReceive>()
             val userIsFound = Users.containsUser(signUp.email)
-            if (userIsFound) throw AppException(HttpStatusCode.NotFound, Error.USER_EXISTS)
+            if (userIsFound) throw AppException(HttpStatusCode.Conflict, Error.USER_EXISTS)
             signUp.isValid()
             val passwordHash = signUp.password.toPasswordHash()
             Users.insertUser(
