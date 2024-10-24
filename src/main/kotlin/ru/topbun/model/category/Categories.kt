@@ -1,6 +1,7 @@
 package ru.topbun.model.category
 
 import io.ktor.http.*
+import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
@@ -9,12 +10,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import ru.topbun.utills.AppException
 import ru.topbun.utills.Error
 
-object Categories : Table("Categories") {
-    private val id = integer("id").autoIncrement()
+object Categories : IntIdTable("Categories") {
     private val name = varchar("name", 24)
     private val image = varchar("image", 50)
-
-    override val primaryKey = PrimaryKey(id)
 
     fun fetchCategory(name: String): CategoryDTO? =
         transaction { selectAll().where { Categories.name eq name }.firstOrNull()?.toCategory() }
@@ -36,7 +34,7 @@ object Categories : Table("Categories") {
 
     private fun ResultRow.toCategory(): CategoryDTO {
         return CategoryDTO(
-            id = this[id],
+            id = this[id].value,
             name = this[name],
             image = this[image],
         )

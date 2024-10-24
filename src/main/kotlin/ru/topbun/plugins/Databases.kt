@@ -1,15 +1,15 @@
 package ru.topbun.plugins
 
-import at.favre.lib.crypto.bcrypt.BCrypt
-import ru.topbun.model.category.Categories
-import ru.topbun.model.user.Users
-import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
+import ru.topbun.model.category.Categories
+import ru.topbun.model.favorite.Favorites
+import ru.topbun.model.ingredients.Ingredients
+import ru.topbun.model.recipe.Recipes
+import ru.topbun.model.step.Steps
+import ru.topbun.model.user.Users
 
 fun Application.configureDatabases() {
     Database.connect(
@@ -18,6 +18,8 @@ fun Application.configureDatabases() {
         driver = environment.config.property("database.driver").getString(),
         password = environment.config.property("database.password").getString(),
     )
-    transaction { SchemaUtils.create(Users, Categories) }
+    transaction {
+        SchemaUtils.create(Users, Categories, Favorites, Ingredients, Recipes, Steps)
+    }
 
 }

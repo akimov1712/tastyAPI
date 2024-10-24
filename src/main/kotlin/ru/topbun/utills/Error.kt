@@ -9,7 +9,7 @@ data class AppException(val code: HttpStatusCode, override val message: String =
 
 object Error {
     const val UNAUTHORIZED = "Пользователь не авторизован"
-    const val NOT_FOUND = "Пользователь с указанной почтой или паролем не найден"
+    const val USER_NOT_FOUND_WITH_EMAIL_PASSWORD = "Пользователь с указанной почтой или паролем не найден"
     const val USER_NOT_FOUND = "Пользователь не найден"
     const val USER_EXISTS = "Пользователь с такой почтой уже зарегистрирован"
     const val CATEGORY_EXISTS = "Категория с таким именем уже существует"
@@ -21,6 +21,16 @@ object Error {
     const val FORBIDDEN = "Отказано в доступе"
     const val BAD_REQUEST = "Произошла ошибка"
     const val PARAMS_INT = "В параметрах укажите число"
+    const val RECIPE_NOT_FOUND = "Рецепт с таким id не найден"
+    const val PARAMS_ID = "В качестве параметра передай число"
+    const val COUNT_INGREDIENTS = "Число инредиентов не может быть меньше 1 и больше 24"
+    const val COUNT_STEPS = "Число шагов не может быть меньше 1 и больше 20"
+    const val LENGTH_TITLE = "Заголовок не может быть больше 48 символов"
+    const val LENGTH_DESCR = "Описание не может быть больше 500 символов"
+    const val COUNT_COOKING_TIME = "Время приготовления не может быть больше 10 дней"
+    const val COUNT_NUTRIENTS = "Количество нутриентов не может быть больше 1000"
+    const val INVALID_IMAGE_URL = "В качестве картинки укажите URL"
+
 }
 
 suspend fun RoutingCall.createError(code: HttpStatusCode, errorMessage: String = "") =

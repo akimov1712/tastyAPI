@@ -6,9 +6,11 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import ru.topbun.features.categories.configureCategoryRouting
+import ru.topbun.features.recipe.configureRecipeRouting
 
 fun Application.configureRouting() {
     configureLoginRouting()
     configureSignUpRouting()
     configureCategoryRouting()
+    configureRecipeRouting()
 }
